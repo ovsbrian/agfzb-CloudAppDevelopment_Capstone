@@ -58,13 +58,48 @@ def static_template_view(request):
     if request.method == "GET":
         return render(request, 'static_template.html', context)
 
-        
-def about(request):
+def get_about(request):
     context = {}
     if request.method == "GET":
         return render(request, 'djangoapp/about.html', context)
-                
-def contact(request):
+
+def get_contact(request):
     context = {}
     if request.method == "GET":
         return render(request, 'djangoapp/contact.html', context)
+
+def registration_request(request):
+    if request.method == "POST":
+        return redirect('djangoapp:login')
+    return render(request, 'djangoapp/registration.html')
+
+
+
+
+# def registration_request(request):
+#     if request.method == "POST":
+#         # Handle user registration logic here
+#         # For example, create a new user
+#         # and save it to the database
+#         return redirect('djangoapp:login')
+#     return render(request, 'djangoapp/registration.html')
+
+def login_request(request):
+    context = {}
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['psw']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('djangoapp:index')
+        else:
+            context['message'] = "Invalid username or password."
+            return render(request, 'djangoapp/index.html', context)
+    else:
+        return render(request, 'djangoapp/index.html', context)
+
+
+def logout_request(request):
+    logout(request)
+    return redirect('djangoapp:index')
