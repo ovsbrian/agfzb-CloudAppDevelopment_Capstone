@@ -52,3 +52,19 @@ def get_dealerships(request):
 # def add_review(request, dealer_id):
 # ...
 
+
+def static_template_view(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'static_template.html', context)
+
+        
+def about(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/about.html', context)
+                
+def contact(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/contact.html', context)
